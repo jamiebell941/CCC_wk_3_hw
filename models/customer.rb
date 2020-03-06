@@ -33,10 +33,31 @@ attr_accessor :name, :funds
        return result
   end
 
+  def ticket_prices
+      sql = "SELECT films.price FROM films INNER JOIN tickets ON film_id = films.id WHERE customer_id = $1"
+      values = [@id]
+      ticket_prices = SqlRunner.run(sql, values)
+      return ticket_prices.map { |price| price['price'].to_i }
+  end
+
+  def buy_tickets()
+    prices = self.ticket_prices()
+    combined_fees = prices.sum
+    return @funds - combined_fees
+  end
+
+  def tickets_bought()
+    sql = "SELECT films.id FROM films INNER JOIN tickets ON tickets.film_id = films.id WHERE customer_id = $1"
+    values = [@id]
+    tickets = SqlRunner.run(sql, values)
+    result = tickets.map{|ticket| Film.new(ticket)}
+    return result.count
+  end
+
   def self.all()
     sql = "SELECT * FROM customers"
     customers = SqlRunner.run(sql)
-  return customers.map {|customer| Customer.new(customer)}
+  return customers.map {|customer| Customer.new(customer.film_id)}.count
   end
 
   def self.delete_all()

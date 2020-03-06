@@ -25,6 +25,15 @@ attr_accessor :title, :price
        return result
   end
 
+  def attending()
+    sql = "SELECT customers.id FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id WHERE film_id = $1"
+    values = [@id]
+    tickets = SqlRunner.run(sql, values)
+    result = tickets.map{|ticket| Customer.new(ticket)}
+    return result.count
+
+  end
+
   def update()
     sql = "UPDATE films SET (title, price) = ($1, $2) where id = $3"
     values = [@title, @price, @id]
