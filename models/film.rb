@@ -16,6 +16,15 @@ attr_accessor :title, :price
     @id = films['id'].to_i
   end
 
+  def customers
+      sql = "SELECT customers.* FROM customers INNER JOIN tickets
+            ON tickets.customer_id = customers.id WHERE film_id = $1"
+      values = [@id]
+      customers = SqlRunner.run(sql, values)
+       result= customers.map { |customer| Customer.new(customer)  }
+       return result
+  end
+
   def update()
     sql = "UPDATE films SET (title, price) = ($1, $2) where id = $3"
     values = [@title, @price, @id]
