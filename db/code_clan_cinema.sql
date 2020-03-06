@@ -8,7 +8,7 @@ CREATE TABLE films(
   price INT
 );
 
-CREATE TABLE cusomters(
+CREATE TABLE customers(
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   funds INT
