@@ -4,6 +4,7 @@ require_relative('models/film')
 require_relative('models/customer')
 require_relative('models/ticket')
 require_relative('db/sql_runner.rb')
+require_relative('models/screenings')
 
 Ticket.delete_all
 Customer.delete_all
@@ -33,6 +34,14 @@ ticket4= Ticket.new({'film_id' => film1.id, 'customer_id' => customer3.id})
 ticket4.save
 ticket5= Ticket.new({'film_id' => film2.id, 'customer_id' => customer3.id})
 ticket5.save
+
+screening1= Screening.new({'film_id' => film2.id, 'seats' => 10, 'show_time' => 2100})
+screening1.save
+screening2= Screening.new({'film_id' => film1.id, 'seats' => 10, 'show_time' => 1900})
+screening2.save
+screening3= Screening.new({'film_id' => film3.id, 'seats' => 10, 'show_time' => 2300})
+screening3.save
+
 
 
 binding.pry

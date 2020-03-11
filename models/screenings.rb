@@ -23,6 +23,11 @@ attr_accessor :seats, :show_time
     @id = showings['id'].to_i
   end
 
+  def sell_ticket()
+   @seats -= 1
+   update()
+ end
+
   def self.all()
       sql = "SELECT * FROM screenings"
       screenings = SqlRunner.run(sql)
@@ -33,6 +38,7 @@ attr_accessor :seats, :show_time
     sql = "DELETE FROM screenings"
     SqlRunner.run(sql)
   end
+
 
 
 
